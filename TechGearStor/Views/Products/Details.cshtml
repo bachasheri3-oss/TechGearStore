@@ -1,0 +1,28 @@
+﻿@model TechGearStore.Models.Product
+
+@{
+    ViewData["Title"] = Model.Name + " - Details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <h3>@Model.Name</h3>
+                <h5 class="text-muted">Category: @Model.Category</h5>
+                <p class="mt-3">@Model.Description</p>
+                <h4 class="text-success fw-bold">$@Model.Price</h4>
+
+                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-4">
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <div class="mb-3 d-flex align-items-center" style="max-width: 200px;">
+                        <label class="me-2 fw-bold">Qty:</label>
+                        <input type="number" name="quantity" value="1" min="1" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-lg ms-2">Back to Catalog</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

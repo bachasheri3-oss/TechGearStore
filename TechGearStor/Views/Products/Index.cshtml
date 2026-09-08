@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TechGearStore.Models.Product>
+
+@{
+    ViewData["Title"] = "Product Catalog - TechGear Store";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">TechGear Product Catalog</h2>
+
+    <!-- Search and Filter Form -->
+    <form asp-controller="Products" asp-action="Index" method="get" class="row g-3 mb-4">
+        <div class="col-md-5">
+            <input type="text" name="searchString" class="form-control" placeholder="Search products..." value="@Context.Request.Query["searchString"]" />
+        </div>
+        <div class="col-md-4">
+            <select name="category" class="form-select">
+                <option value="">All Categories</option>
+                @if (ViewBag.Categories != null)
+                {
+                    foreach (var cat in ViewBag.Categories)
+                    {
+                        <option value="@cat">@cat</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">Filter / Search</button>
+        </div>
+    </form>
+
+    <!-- Product Grid -->
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.Category</h6>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text fw-bold text-success">$@item.Price</p>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-dark btn-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
